@@ -6,6 +6,7 @@ using UnityEngine.UI;
 [System.Serializable]
 public class Character
 {
+    //깃허브 테스트
     public string characterName; //캐릭터 이름 (깃헙 테스트 끝나면 삭제바람!)
     /// <summary>
     /// The root is the container for all images related to the character in the scene. The root object.
