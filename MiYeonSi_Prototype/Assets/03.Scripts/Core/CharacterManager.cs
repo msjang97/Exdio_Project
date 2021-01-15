@@ -34,7 +34,7 @@ public class CharacterManager : MonoBehaviour
     /// Try to get a character by the name provided from the character list.
     /// </summary>
     /// <param name = "characterName">Character name.</param>
-    public Character GetCharacter(string characterName, bool createCharacterIfDoesNotExist = true)
+    public Character GetCharacter(string characterName, bool createCharacterIfDoesNotExist = true, bool enableCreatedCharacterOnStart = true)
     {
         //search our dictionary to find the character quickly if it is already in our scene.
         int index = -1;
@@ -44,7 +44,7 @@ public class CharacterManager : MonoBehaviour
         }
         else if (createCharacterIfDoesNotExist)
         {
-            return CreateCharacter(characterName);
+            return CreateCharacter(characterName, enableCreatedCharacterOnStart);
         }
 
         return null;
@@ -54,9 +54,9 @@ public class CharacterManager : MonoBehaviour
     /// Creates the character.
     /// </summary>
     /// <param name="characterName"></param>
-    public Character CreateCharacter (string characterName)
+    public Character CreateCharacter (string characterName, bool enableOnStart = true)
     {
-        Character newCharacter = new Character(characterName);
+        Character newCharacter = new Character(characterName, enableOnStart);
 
         characterDictionary.Add(characterName, characters.Count);
         characters.Add(newCharacter);
@@ -64,10 +64,14 @@ public class CharacterManager : MonoBehaviour
         return newCharacter;
 
     }
-
-    // Update is called once per frame
-    void Update()
+    
+    public class CHARACTERPOSITIONS
     {
-        
+        public Vector2 bottomLeft = new Vector2(0, 0);
+        public Vector2 topRight = new Vector2(1f, 1f);
+        public Vector2 center = new Vector2(0.5f, 0.5f);
+        public Vector2 bottomRight = new Vector2(1f, 0);
+        public Vector2 topLeft = new Vector2(0, 1f);
     }
+    public static CHARACTERPOSITIONS charactorPositions;
 }
