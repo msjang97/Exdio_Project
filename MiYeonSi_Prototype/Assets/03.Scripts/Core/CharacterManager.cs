@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -73,5 +74,23 @@ public class CharacterManager : MonoBehaviour
         public Vector2 bottomRight = new Vector2(1f, 0);
         public Vector2 topLeft = new Vector2(0, 1f);
     }
-    public static CHARACTERPOSITIONS charactorPositions;
+    public static CHARACTERPOSITIONS charactorPositions = new CHARACTERPOSITIONS();
+
+    internal void StartCoroutine(Coroutine transitioningBody)
+    {
+        throw new NotImplementedException();
+    }
+
+    public class CHARACTEREXPRESSIONS
+    {
+        public int normal = 0;
+        public int panic = 1;
+        public int happy = 2;
+        public int fatigue = 3;
+        public int suprprise = 5;
+        public int shy = 6;
+    }
+
+    public static CHARACTEREXPRESSIONS characterExpressions = new CHARACTEREXPRESSIONS();
+
 }

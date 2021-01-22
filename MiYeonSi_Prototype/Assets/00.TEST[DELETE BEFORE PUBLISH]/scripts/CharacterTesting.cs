@@ -11,6 +11,7 @@ public class CharacterTesting : MonoBehaviour
     void Start()
     {
         ChanWu = CharacterManager.instance.GetCharacter("ChanWu", enableCreatedCharacterOnStart: false);
+        ChanWu.GetSprite(2);
         //LoveCell = CharacterManager.instance.GetCharacter("LoveCell", enableCreatedCharacterOnStart: false);
     }
 
@@ -20,6 +21,10 @@ public class CharacterTesting : MonoBehaviour
     public Vector2 moveTarget;
     public float moveSpeed;
     public bool smooth;
+
+    public int bodyIndex, expressionIndex = 0;
+    public float speed = 5f;
+    public bool smoothranstitions = false;
 
     // Update is called once per frame
     void Update()
@@ -40,6 +45,22 @@ public class CharacterTesting : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.S))
         {
             ChanWu.StopMoving(true);
+        }
+
+        if (Input.GetKeyDown(KeyCode.B))
+        {
+            if (Input.GetKey(KeyCode.T))
+            {
+                Debug.Log("눌렸어요");
+                ChanWu.TransitionBody(ChanWu.GetSprite(CharacterManager.characterExpressions.happy), speed, smoothranstitions);
+            }
+            else
+                ChanWu.SetBody(bodyIndex);
+        }
+
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            ChanWu.SetExpression(bodyIndex);
         }
 
     }

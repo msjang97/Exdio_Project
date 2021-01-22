@@ -946,6 +946,8 @@ MonoBehaviour:
       renderer: {fileID: 0}
       bodyRenderer: {fileID: 0}
       expressionRenderer: {fileID: 0}
+      allBodyRenderers: []
+      allExpressionRenderers: []
   LoveCell:
     characterName: 
     root: {fileID: 0}
@@ -953,6 +955,8 @@ MonoBehaviour:
       renderer: {fileID: 0}
       bodyRenderer: {fileID: 0}
       expressionRenderer: {fileID: 0}
+      allBodyRenderers: []
+      allExpressionRenderers: []
   speech:
   - Hi! My name is Chanwu
   - How are you today?
@@ -960,6 +964,10 @@ MonoBehaviour:
   moveTarget: {x: 0, y: 0}
   moveSpeed: 5
   smooth: 1
+  bodyIndex: 0
+  expressionIndex: 0
+  speed: 5
+  smoothranstitions: 1
 --- !u!1 &1574497624
 GameObject:
   m_ObjectHideFlags: 0
