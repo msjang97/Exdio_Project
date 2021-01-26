@@ -66,6 +66,7 @@ public class Character
         // 스프라이트로 불러 올 때.
         Sprite[] sprites = Resources.LoadAll<Sprite>("Images/Character/GiChanWu/" + characterName);
         Debug.Log(sprites.Length);
+        Debug.Log(sprites[index]);
         return sprites[index];
     }
 

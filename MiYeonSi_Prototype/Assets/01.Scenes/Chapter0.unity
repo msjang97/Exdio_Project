@@ -475,8 +475,9 @@ GameObject:
   - component: {fileID: 802586659}
   - component: {fileID: 802586661}
   - component: {fileID: 802586660}
+  - component: {fileID: 802586662}
   m_Layer: 5
-  m_Name: Text
+  m_Name: SpeechText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -541,6 +542,24 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 802586658}
   m_CullTransparentMesh: 0
+--- !u!114 &802586662
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 802586658}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17238da5bb1cf214fb849c296f9f7f39, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  text: {fileID: 802586660}
+  say: Let's head over to the <b>Haunted Forest Of Endless Screams</b>! What's the
+    <i>worst</i> that can happen?
+  charactersPerFrame: 1
+  speed: 15
+  useEncap: 1
 --- !u!1 &821747422
 GameObject:
   m_ObjectHideFlags: 0
@@ -952,7 +971,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1443468413}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ad845ec9a5288d548b293af838615337, type: 3}
   m_Name: 
@@ -1005,16 +1024,18 @@ MonoBehaviour:
       allBodyRenderers: []
       allExpressionRenderers: []
   speech:
-  - Hi! My name is Chanwu
-  - How are you today?
-  - Oh really?
+  - "\uC548\uB155 \uB0B4\uC774\uB984\uC740 \uCC2C\uC6B0\uC57C"
+  - "<b>\uC9C4\uD55C\uAE00\uC790\uB294 b\uD0DC\uADF8\uB97C \uD65C\uC6A9\uD558\uBA74
+    \uB3FC!</b>"
+  - "<i>\uC774\uD0C8\uB9AD\uCCB4\uB97C \uC4F0\uB824\uBA74 i\uD0DC\uADF8\uB97C \uD65C\uC6A9\uD574\uBD10!</i>"
+  - "\uCC38 \uC27D\uC9C0!"
   moveTarget: {x: 0, y: 0}
   moveSpeed: 5
   smooth: 1
-  bodyIndex: 0
-  expressionIndex: 0
-  speed: 5
-  smoothranstitions: 1
+  bodyIndex: 1
+  expressionIndex: 1
+  speed: 2
+  smoothranstitions: 0
 --- !u!114 &1443468417
 MonoBehaviour:
   m_ObjectHideFlags: 0

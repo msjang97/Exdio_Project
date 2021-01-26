@@ -13,11 +13,6 @@ public class DialogueSystem : MonoBehaviour
         instance = this;
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
 
     public void Say(string speech, string speaker = "")
     {
@@ -42,6 +37,10 @@ public class DialogueSystem : MonoBehaviour
         {
             StopCoroutine(speaking);
         }
+        if(textArchitect != null && textArchitect.isConstructing)
+        {
+            textArchitect.Stop();
+        }
         speaking = null;
     }
 
@@ -50,24 +49,31 @@ public class DialogueSystem : MonoBehaviour
 
     public string targetSpeech = "";
     Coroutine speaking = null;
+    TextArchitect textArchitect = null;
+
     IEnumerator Speaking(string speech, bool additive, string speaker = "")
     {
         speechPanel.SetActive(true);
-        targetSpeech = speech;
 
-        if (!additive)
-            speechText.text = "";
-        else
-            targetSpeech = speechText.text + targetSpeech;
+        string additiveSpeech = additive ? speechText.text : "";
+        targetSpeech = additiveSpeech + speech;
+
+        textArchitect = new TextArchitect(speech, additiveSpeech);
 
         speakerNameText.text = DetermineSpeaker(speaker); // temporary
         isWaitingForUserInput = false;
 
-        while (speechText.text != targetSpeech)
+        while (textArchitect.isConstructing)
         {
-            speechText.text += targetSpeech[speechText.text.Length];
+            if (Input.GetKey(KeyCode.Space))
+                textArchitect.skip = true;
+
+            speechText.text = textArchitect.currentText;
+
             yield return new WaitForEndOfFrame();
         }
+        //is skipping prevented the display text from updating completely, force it to update.
+        speechText.text = textArchitect.currentText;
 
         //text finished
         isWaitingForUserInput = true;
