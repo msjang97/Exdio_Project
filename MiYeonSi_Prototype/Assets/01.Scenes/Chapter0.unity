@@ -476,6 +476,7 @@ GameObject:
   - component: {fileID: 802586661}
   - component: {fileID: 802586660}
   - component: {fileID: 802586662}
+  - component: {fileID: 802586663}
   m_Layer: 5
   m_Name: SpeechText
   m_TagString: Untagged
@@ -560,6 +561,20 @@ MonoBehaviour:
   charactersPerFrame: 1
   speed: 15
   useEncap: 1
+--- !u!114 &802586663
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 802586658}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: adef4c61765b66048bbe8440b8bdeaf4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  continualUpdate: 1
+  fontSizeAtDefaultResolution: 30
 --- !u!1 &821747422
 GameObject:
   m_ObjectHideFlags: 0
@@ -1029,6 +1044,8 @@ MonoBehaviour:
     \uB3FC!</b>"
   - "<i>\uC774\uD0C8\uB9AD\uCCB4\uB97C \uC4F0\uB824\uBA74 i\uD0DC\uADF8\uB97C \uD65C\uC6A9\uD574\uBD10!</i>"
   - "\uCC38 \uC27D\uC9C0!"
+  - "\uD654\uBA74 \uD574\uC0C1\uB3C4\uC5D0 \uB530\uB77C\uC11C \uAE00\uC790 \uD06C\uAE30\uB97C
+    \uB9DE\uCD9C \uC218 \uC788\uB300 \uC2E0\uAE30\uD558\uB2E4.."
   moveTarget: {x: 0, y: 0}
   moveSpeed: 5
   smooth: 1
