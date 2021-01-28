@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class DialogueSystem : MonoBehaviour
 {
@@ -106,10 +107,10 @@ public class DialogueSystem : MonoBehaviour
         // The main panel containing all dialogue related elements on the UI
 
         public GameObject speechPanel;
-        public Text speakerNameText;
-        public Text speechText;
+        public TextMeshProUGUI speakerNameText;
+        public TextMeshProUGUI speechText;
     }
     public GameObject speechPanel { get { return elements.speechPanel; } }
-    public Text speakerNameText { get { return elements.speakerNameText; } }
-    public Text speechText { get { return elements.speechText; } }
+    public TextMeshProUGUI speakerNameText { get { return elements.speakerNameText; } }
+    public TextMeshProUGUI speechText { get { return elements.speechText; } }
 }
