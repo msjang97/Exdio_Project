@@ -33,9 +33,7 @@ public class Character
         if (!enabled)
             enabled = true;
 
-        if (!add)
-            dialogue.Say(speech, characterName);
-        else dialogue.SayAdd(speech, characterName);
+        dialogue.Say(speech, characterName, add);
     }
 
     Vector2 targetPosition;
@@ -70,6 +68,17 @@ public class Character
         return sprites[index];
     }
 
+    public Sprite GetSprite(string spriteName = "")
+    {
+        Sprite[] sprites = Resources.LoadAll<Sprite>("Images/Character/GiChanWu/" + characterName);
+        for(int i = 0; i < sprites.Length; i++)
+        {
+            if (sprites[i].name == spriteName)
+                return sprites[i];
+        }
+        return sprites.Length > 0 ? sprites[0] : null;
+    }
+
     public void SetBody(int index)
     {
         renderers.bodyRenderer.sprite = GetSprite(index);
@@ -78,6 +87,10 @@ public class Character
     public void SetBody(Sprite sprite)
     {
         renderers.bodyRenderer.sprite = sprite;
+    }
+    public void SetBody(string spriteName)
+    {
+        renderers.bodyRenderer.sprite = GetSprite(spriteName);
     }
 
     public void SetExpression(int index)
@@ -88,6 +101,11 @@ public class Character
     public void SetExpression(Sprite sprite)
     {
         renderers.expressionRenderer.sprite = sprite;
+    }
+
+    public void SetExpression(string spriteName)
+    {
+        renderers.expressionRenderer.sprite = GetSprite(spriteName);
     }
 
     Coroutine transitioningBody = null;

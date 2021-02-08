@@ -4,25 +4,25 @@ TextureImporter:
   internalIDToNameTable:
   - first:
       213: -6756274851109142386
-    second: ChanWu_0
+    second: default
   - first:
       213: -1851854380009587613
-    second: ChanWu_1
+    second: sad
   - first:
       213: -7113808499622299319
-    second: ChanWu_2
+    second: happy
   - first:
       213: 1412033841831910188
-    second: ChanWu_3
+    second: tired
   - first:
       213: -345470557638506515
     second: ChanWu_4
   - first:
       213: -7897280494632425862
-    second: ChanWu_5
+    second: surprised
   - first:
       213: 4622257134025968036
-    second: ChanWu_6
+    second: shy
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -120,7 +120,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: ChanWu_0
+      name: default
       rect:
         serializedVersion: 2
         x: 75
@@ -128,7 +128,7 @@ TextureImporter:
         width: 816
         height: 1578
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -141,7 +141,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ChanWu_1
+      name: sad
       rect:
         serializedVersion: 2
         x: 1095
@@ -149,7 +149,7 @@ TextureImporter:
         width: 816
         height: 1578
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -162,7 +162,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ChanWu_2
+      name: happy
       rect:
         serializedVersion: 2
         x: 2115
@@ -170,7 +170,7 @@ TextureImporter:
         width: 816
         height: 1578
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -183,7 +183,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ChanWu_3
+      name: tired
       rect:
         serializedVersion: 2
         x: 3135
@@ -191,7 +191,7 @@ TextureImporter:
         width: 816
         height: 1578
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -212,7 +212,7 @@ TextureImporter:
         width: 24
         height: 10
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -225,7 +225,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ChanWu_5
+      name: surprised
       rect:
         serializedVersion: 2
         x: 75
@@ -233,7 +233,7 @@ TextureImporter:
         width: 816
         height: 1578
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -246,7 +246,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ChanWu_6
+      name: shy
       rect:
         serializedVersion: 2
         x: 1095
@@ -254,7 +254,7 @@ TextureImporter:
         width: 816
         height: 1578
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []

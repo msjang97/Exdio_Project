@@ -45,6 +45,45 @@ public class GlobalF : MonoBehaviour
         return anyValueChanged;
     }
 
+    public static bool TransitionRawImages(ref RawImage activImage, ref List<RawImage> allImages, float speed, bool smooth)
+    {
+        bool anyValueChanged = false;
+
+        speed *= Time.deltaTime;
+        for (int i = allImages.Count - 1; i >= 0; i--)
+        {
+            RawImage image = allImages[i];
+
+            if (image == activImage)
+            {
+                if (image.color.a < 1)
+                {
+                    image.color = SetAlpha(image.color, smooth ? Mathf.Lerp(image.color.a, 1f, speed) : Mathf.MoveTowards(image.color.a, 1f, speed));
+                    anyValueChanged = true;
+                }
+            }
+            else
+            {
+                if (image.color.a > 0)
+                {
+                    image.color = SetAlpha(image.color, smooth ? Mathf.Lerp(image.color.a, 0f, speed) : Mathf.MoveTowards(image.color.a, 0f, speed));
+                    anyValueChanged = true;
+                }
+
+                else
+                {
+                    allImages.RemoveAt(i);
+                    DestroyImmediate(image.gameObject);
+                    continue;
+                }
+            }
+        }
+
+
+        return anyValueChanged;
+    }
+
+
 
     public static Color SetAlpha(Color color, float alpha)
     {

@@ -1,0 +1,8 @@
+setBackground(Room, false, 1) playMusic(persona1)
+narrator "끝나긴 할까 이개발.."
+setBackground(null, 0.5, true)
+지찬우 "하 텍스트메쉬프로 드디어 해치웠다....힘들다....." setExpression(지찬우,face,shy,3)
+setBackground(Room, false, 1)
+
+마민석 "귀찮더라도 훨씬 정리된 느낌이다.....!"
+지찬우 "오류가 많다, 캐릭터가 겹쳐보이고, 표정이 안변한다. 내일 디버깅해야지"
