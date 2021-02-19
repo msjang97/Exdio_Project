@@ -114,9 +114,6 @@ public class Character
 
     public void TransitionBody(Sprite sprite, float speed, bool smooth)
     {
-        if (renderers.bodyRenderer.sprite == sprite)
-            return;
-
         StopTranstioningBody();
         transitioningBody = CharacterManager.instance.StartCoroutine(TransitioningBody(sprite, speed, smooth));
     }
@@ -221,6 +218,29 @@ public class Character
             yield return new WaitForEndOfFrame();
         }
         StopMoving();
+    }
+
+
+    public void FadeOut(float speed = 3, bool smooth = false)
+    {
+        Sprite alphaSprite = Resources.Load<Sprite>("Images/AlphaOnly");
+
+        lastBodySprite = renderers.bodyRenderer.sprite;
+        lastFacialSprite = renderers.expressionRenderer.sprite;
+
+        TransitionBody(alphaSprite, speed, smooth);
+        //TransitionExpression(alphaSprite, speed, smooth); 안만듬 어짜피 바디로 감정 바뀌니까
+        //15  - 4:15
+
+    }
+
+    Sprite lastBodySprite, lastFacialSprite = null;
+    public void FadeIn(float speed = 3, bool smooth = false)
+    {
+        if(lastBodySprite != null)
+        {
+            TransitionBody(lastBodySprite, speed, smooth);
+        }
     }
 
     /// <summary>

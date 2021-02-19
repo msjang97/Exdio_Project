@@ -6,7 +6,6 @@ using TMPro;
 
 public class architectTesting : MonoBehaviour
 {
-    public Text text;
     public TextMeshProUGUI tmprotext;
     TextArchitect architect;
 
@@ -14,13 +13,11 @@ public class architectTesting : MonoBehaviour
     public string say;
     public int charactersPerFrame = 1;
     public float speed = 1f;
-    public bool useEncap = true;
-    public bool useTMPro = true;
 
     //Use this for initialization
     void Start()
     {
-        architect = new TextArchitect(say, "", charactersPerFrame, speed, useEncap, useTMPro);
+        architect = new TextArchitect(tmprotext, say, "", charactersPerFrame, speed);
     }
 
     // Update is called once per frame
@@ -28,12 +25,7 @@ public class architectTesting : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            architect = new TextArchitect(say, "", charactersPerFrame, speed, useEncap, useTMPro);
+            architect = new TextArchitect(tmprotext, say, "", charactersPerFrame, speed);
         }
-
-        if (useTMPro)
-            tmprotext.text = architect.currentText;
-        else
-            text.text = architect.currentText;
     }
 }

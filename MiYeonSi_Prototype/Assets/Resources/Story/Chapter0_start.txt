@@ -1,8 +1,25 @@
+지찬우 "I...{c} I can see something...{a}...{wa 1}......" enter(마민석) exit(지찬우)
+"I'm stunned for a moment. {c}The light is so pure."
+지찬우 "Hello?{a} Is anyone there?"
+마민석 "찬우군.. 8시부터 차마 깨우지 못하고 쭉 여기서 지켜봤습니다,, 드디어 일어나셨군요"
+지찬우 "하 잘잤다.." {c} setExpression(지찬우,face,shy,3)
 setBackground(Room, false, 1) playMusic(persona1)
-narrator "끝나긴 할까 이개발.."
-setBackground(null, 0.5, true)
-지찬우 "하 텍스트메쉬프로 드디어 해치웠다....힘들다....." setExpression(지찬우,face,shy,3)
-setBackground(Room, false, 1)
+지찬우 "하 잘잤다.." {c} setExpression(지찬우,face,shy,3)
+narrator "찬우는 오늘도 늦잠을 자고 있습니다.."
+지찬우 "하 잘잤다.." setExpression(지찬우,face,shy,3)
+"엥 시간이 벌써 12시잖아?!?!"
+narrator "그때 창밖에서 익숙한 목소리가 들려온다"
+마민석 "찬우군.. 8시부터 차마 깨우지 못하고 쭉 여기서 지켜봤습니다,, 드디어 일어나셨군요"
+지찬우 "으악!! 아저씨 깨우셨어야죠!!!!!! 엥 그게아니라 여긴 왜오신거에요!?"
 
-마민석 "귀찮더라도 훨씬 정리된 느낌이다.....!"
-지찬우 "오류가 많다, 캐릭터가 겹쳐보이고, 표정이 안변한다. 내일 디버깅해야지"
+choice "뭐라고 대답해야 할까?"
+{
+	"일단 들어오세요 밖에 추우니까.."
+		마민석 "찬우군..감동입니다."
+	"당장 안가면 경찰에 스토킹범으로 신고할거에요!!"
+		마민석 "너무하군요 찬우군.. 가겠습니다.."
+}
+지찬우 "하.....학교에 늦어서 큰일이네.."
+
+
+setBackground(null, 0.5, true)
