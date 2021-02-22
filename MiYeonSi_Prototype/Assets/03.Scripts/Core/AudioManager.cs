@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class AudioManager : MonoBehaviour
 {
-    public static AudioManager instance;//meta파일 테스트용
+    public static AudioManager instance;
 
     public static SONG activeSong = null;
     public static List<SONG> allSongs = new List<SONG>();

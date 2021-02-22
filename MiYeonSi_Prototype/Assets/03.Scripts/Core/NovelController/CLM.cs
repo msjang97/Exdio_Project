@@ -15,6 +15,7 @@ public class CLM : MonoBehaviour
         /// Who is speaking on this line.
         /// </summary>
         public string speaker = "";
+        public static Character curCharacter;
 
         /// <summary>
         /// The segments on this line that make up each piece of dialogue.
@@ -32,7 +33,7 @@ public class CLM : MonoBehaviour
             string[] actionsArr = dialogueAndActions.Length == 3 ? dialogueAndActions[2].Split(actionSplitter) : dialogueAndActions[0].Split(actionSplitter);
 
             if(dialogueAndActions.Length == 3) //contains dialogue
-            {
+            {                
                 speaker = dialogueAndActions[0] == "" ? NovelController.instance.cachedLastSpeaker : dialogueAndActions[0];
                 if (speaker[speaker.Length - 1] == ' ')
                     speaker = speaker.Remove(speaker.Length - 1);
@@ -48,7 +49,6 @@ public class CLM : MonoBehaviour
             {
                 actions.Add(actionsArr[i]);
             }
-
             //the line is now segmented, the actions are loaded, and it is ready to be used.
         }
 
@@ -70,7 +70,6 @@ public class CLM : MonoBehaviour
                 {
                     //commands and data are split by spaces
                     string[] commandData = parts[i].Split(' ');
-                    Debug.Log("SegmentDialogue함수 실행중!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
                     switch (commandData[0])
                     {
                         case "c": //wait for input and clear.
@@ -92,7 +91,7 @@ public class CLM : MonoBehaviour
                             segment.pretext = segments.Count > 0 ? segments[segments.Count - 1].dialogue : "";
                             break;
                     }
-                    i++; //invrement so we move past the command and to the next bit of dialogue. //12:16
+                    i++; //invrement so we move past the command and to the next bit of dialogue.
                 }
 
                 segment.dialogue = parts[i];
@@ -126,7 +125,16 @@ public class CLM : MonoBehaviour
             {
                 if(line.speaker != "narrator")
                 {
+                    //line.curSpeaker = line.speaker;
+                    if(curCharacter != null && line.speaker != curCharacter.characterName)
+                    {
+                        curCharacter.FadeOut(100, false); //방금까지 말하던 사람 지워주기.
+                    }
                     Character character = CharacterManager.instance.GetCharacter(line.speaker);
+                    curCharacter = character;
+                    //Character curCharacter = CharacterManager.instance.GetCharacter(line.curSpeaker);
+                    //curCharacter.FadeOut(100, false);
+                    character.FadeIn(100, false); //새로운 사람 FadeIn.
                     character.Say(dialogue, pretext != "");
                 }
                 else

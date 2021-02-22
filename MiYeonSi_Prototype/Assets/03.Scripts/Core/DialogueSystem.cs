@@ -6,14 +6,13 @@ using TMPro;
 
 public class DialogueSystem : MonoBehaviour
 {
-    public static DialogueSystem instance; //instance 전역변수 생성
+    public static DialogueSystem instance;
     public ELEMENTS elements;
 
     void Awake()
     {
         instance = this;
     }
-
 
     public void Say(string speech, string speaker = "", bool additive = false)
     {
@@ -23,9 +22,7 @@ public class DialogueSystem : MonoBehaviour
             speechText.text = targetSpeech;
 
         speaking = StartCoroutine(Speaking(speech, additive, speaker));
-    }
-
-    
+    }   
 
     public void StopSpeaking()
     {
@@ -62,7 +59,7 @@ public class DialogueSystem : MonoBehaviour
 
         while (textArchitect.isConstructing)
         {
-            if (Input.GetKey(KeyCode.Space))
+            if (Input.GetKey(KeyCode.RightArrow))
                 textArchitect.skip = true;
 
             yield return new WaitForEndOfFrame();
@@ -97,9 +94,7 @@ public class DialogueSystem : MonoBehaviour
     public class ELEMENTS
     {
         // The main panel containing all dialogue related elements on the UI
-
         public GameObject speechPanel;
-        //public GameObject speakerNamePane; 우린 네임 패널이 일체형이라 이거 하면 안됌
         public TextMeshProUGUI speakerNameText;
         public TextMeshProUGUI speechText;
     }

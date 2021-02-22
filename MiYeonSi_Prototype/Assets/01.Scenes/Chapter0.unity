@@ -1850,7 +1850,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1443468415}
   - component: {fileID: 1443468414}
-  - component: {fileID: 1443468416}
   - component: {fileID: 1443468417}
   - component: {fileID: 1443468418}
   - component: {fileID: 1443468419}
@@ -1890,49 +1889,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1443468416
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1443468413}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 21a96ab8b8b1a694ca7f6e75569624b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ChanWu:
-    characterName: 
-    root: {fileID: 0}
-    renderers:
-      renderer: {fileID: 0}
-      bodyRenderer: {fileID: 0}
-      expressionRenderer: {fileID: 0}
-      allBodyRenderers: []
-      allExpressionRenderers: []
-  LoveCell:
-    characterName: 
-    root: {fileID: 0}
-    renderers:
-      renderer: {fileID: 0}
-      bodyRenderer: {fileID: 0}
-      expressionRenderer: {fileID: 0}
-      allBodyRenderers: []
-      allExpressionRenderers: []
-  speech:
-  - "\uC548\uB155 \uB0B4\uC774\uB984\uC740 <color=red>\uCC2C\uC6B0</color>\uC57C"
-  - "<b>\uC9C4\uD55C\uAE00\uC790</b>\uB294 b\uD0DC\uADF8\uB97C \uD65C\uC6A9\uD558\uBA74
-    \uB3FC!"
-  - "<i>\uD654\uBA74 \uD574\uC0C1\uB3C4\uC5D0 \uB530\uB77C\uC11C \uAE00\uC790\uD06C\uAE30\uB97C
-    \uC870\uC808\uD560 \uC218 \uC788\uC5B4! </i>"
-  moveTarget: {x: 0, y: 0}
-  moveSpeed: 5
-  smooth: 1
-  bodyIndex: 1
-  expressionIndex: 1
-  speed: 2
-  smoothranstitions: 0
 --- !u!114 &1443468417
 MonoBehaviour:
   m_ObjectHideFlags: 0

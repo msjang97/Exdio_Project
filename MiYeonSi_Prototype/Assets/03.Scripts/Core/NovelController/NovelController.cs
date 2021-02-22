@@ -28,7 +28,6 @@ public class NovelController : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.RightArrow))
         {
             Next();
-            Debug.Log("넥스트가 true로 바뀜!!!!!!!!!!!!!!!!!!1");
         }
     }
 
@@ -346,68 +345,39 @@ public class NovelController : MonoBehaviour
         Character c = CharacterManager.instance.GetCharacter(character);
         c.SetPosition(new Vector2(locationX, locationY));
     }
-    void Command_ChangeExpression(string data)
+    void Command_ChangeExpression(string data) //매개변수 ( 캐릭터이름, 캐릭터파일이름, 스피드) 로 넘겨주기.
     {
         string[] parameters = data.Split(',');
         string character = parameters[0];
-        string region = parameters[1];
-        string expression = parameters[2];
-        float speed = parameters.Length == 4 ? float.Parse(parameters[3]) : 1f;
+        string expression = parameters[1];
+        float speed = parameters.Length == 3 ? float.Parse(parameters[2]) : 1f;
 
         Character c = CharacterManager.instance.GetCharacter(character);
+        Debug.Log(expression);
         Sprite sprite = c.GetSprite(expression);
-
-        if (region.ToLower() == "body")
-            c.TransitionBody(sprite, speed, false);
-        if (region.ToLower() == "face")
-            c.TransitionBody(sprite, speed, false);
+        c.TransitionBody(sprite, speed, false); 
     }
 
     void Command_Enter(string data)
     {
         string[] parameters = data.Split(',');
-        string[] characters = parameters[0].Split(';');
-        float speed = 3;
+        string character = parameters[0];
+        float speed = 100;
         bool smooth = false;
-        for(int i = 1; i < parameters.Length; i++)
-        {
-            float fVal = 0; bool bVal = false;
-            if(float.TryParse(parameters[i], out fVal))
-            { speed = fVal; continue; }
-            if(bool.TryParse(parameters[i], out bVal))
-            { smooth = bVal; continue; }
 
-        }
+        Character c = CharacterManager.instance.GetCharacter(character, true, false);
+        c.renderers.bodyRenderer.color = new Color(1, 1, 1, 1); //알파값0은 완전한 투명
+        c.enabled = true;
 
-        foreach(string s in characters)
-        {
-            Character c = CharacterManager.instance.GetCharacter(s, true, false);
-            if(!c.enabled)
-            {
-                c.renderers.bodyRenderer.color = new Color(1, 1, 1, 0);
-                //c.renderers.expressionRenderer.color = new Color(1, 1, 1, 0);
-                c.enabled = true;
-
-                c.TransitionBody(c.renderers.bodyRenderer.sprite, speed, smooth);
-                //expression은 안함
-            }
-        }
+        c.FadeIn(speed, smooth);
     }
 
     void Command_Exit(string data)
     {
         string[] parameters = data.Split(',');
         string[] characters = parameters[0].Split(';');
-        float speed = 3;
+        float speed = 100;
         bool smooth = false;
-        for(int i = 1; i<parameters.Length; i++)
-        {
-            float fVal = 0; bool bVal = false;
-            if(float.TryParse(parameters[i], out fVal))
-            { speed = fVal; continue; }
-            if(bool.TryParse(parameters[i], out bVal))
-            { smooth = bVal; continue; }
-        }
 
         foreach(string s in characters)
         {

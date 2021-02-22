@@ -12,8 +12,6 @@ public class Character
     /// </summary>
     [HideInInspector] public RectTransform root;
 
-    public bool isMultiLayerCharacter { get { return renderers.renderer == null; } }
-
     public bool enabled { get { return root.gameObject.activeInHierarchy; } set { root.gameObject.SetActive(value); } }
 
     /// <summary>
@@ -53,35 +51,15 @@ public class Character
         moving = CharacterManager.instance.StartCoroutine(Moving(Target, speed, smooth));
     }
 
-
-    // Begin Trasnitioning Images
-    public Sprite GetSprite(int index = 0)
+    public Sprite GetSprite(string spriteName = "") //파일명으로 Sprite찾기.
     {
-        //스프라이트를 안쓰고 이미지를 불러다 바꾸고 싶을때
-        //Sprite sprite = Resources.Load<Sprite>("Images/Character/GiChanWu/GiChanWu_Panic");
-        //return sprite;
-
-        // 스프라이트로 불러 올 때.
-        Sprite[] sprites = Resources.LoadAll<Sprite>("Images/Character/GiChanWu/" + characterName);
-        Debug.Log(sprites.Length);
-        Debug.Log(sprites[index]);
-        return sprites[index];
-    }
-
-    public Sprite GetSprite(string spriteName = "")
-    {
-        Sprite[] sprites = Resources.LoadAll<Sprite>("Images/Character/GiChanWu/" + characterName);
-        for(int i = 0; i < sprites.Length; i++)
+        Sprite[] sprites = Resources.LoadAll<Sprite>("Images/Character/" + characterName); //원하는 캐릭터 이미지폴더에 접근.
+        for (int i = 0; i < sprites.Length; i++)
         {
             if (sprites[i].name == spriteName)
                 return sprites[i];
         }
         return sprites.Length > 0 ? sprites[0] : null;
-    }
-
-    public void SetBody(int index)
-    {
-        renderers.bodyRenderer.sprite = GetSprite(index);
     }
 
     public void SetBody(Sprite sprite)
@@ -93,24 +71,8 @@ public class Character
         renderers.bodyRenderer.sprite = GetSprite(spriteName);
     }
 
-    public void SetExpression(int index)
-    {
-        renderers.expressionRenderer.sprite = GetSprite(index);
-    }
-
-    public void SetExpression(Sprite sprite)
-    {
-        renderers.expressionRenderer.sprite = sprite;
-    }
-
-    public void SetExpression(string spriteName)
-    {
-        renderers.expressionRenderer.sprite = GetSprite(spriteName);
-    }
-
     Coroutine transitioningBody = null;
     bool isTransitioningBody { get { return transitioningBody != null; } }
-
 
     public void TransitionBody(Sprite sprite, float speed, bool smooth)
     {
@@ -127,6 +89,7 @@ public class Character
 
     public IEnumerator TransitioningBody(Sprite sprite, float speed, bool smooth)
     {
+        
         for (int i = 0; i < renderers.allBodyRenderers.Count; i++)
         {
             Image image = renderers.allBodyRenderers[i];
@@ -223,18 +186,19 @@ public class Character
 
     public void FadeOut(float speed = 3, bool smooth = false)
     {
-        Sprite alphaSprite = Resources.Load<Sprite>("Images/AlphaOnly");
+        Sprite alphaSprite = Resources.Load<Sprite>("Images/Character/AlphaOnly/투명파일");
 
         lastBodySprite = renderers.bodyRenderer.sprite;
-        lastFacialSprite = renderers.expressionRenderer.sprite;
+        //lastFacialSprite = renderers.expressionRenderer.sprite;
 
         TransitionBody(alphaSprite, speed, smooth);
+        //enabled = false;
         //TransitionExpression(alphaSprite, speed, smooth); 안만듬 어짜피 바디로 감정 바뀌니까
         //15  - 4:15
 
     }
 
-    Sprite lastBodySprite, lastFacialSprite = null;
+    public Sprite lastBodySprite = null;
     public void FadeIn(float speed = 3, bool smooth = false)
     {
         if(lastBodySprite != null)
@@ -263,14 +227,17 @@ public class Character
         characterName = _name;
 
         //get the renderer(s)
-        renderers.renderer = ob.GetComponent<RawImage>();
-        if (isMultiLayerCharacter)
+        renderers.bodyRenderer = ob.GetComponentInChildren<Image>();
+        Debug.Log(renderers.bodyRenderer);
+        renderers.allBodyRenderers.Add(renderers.bodyRenderer);
+        /*if (isCharacterRendererExist) //renderer에 값이 있으면 true
         {
             renderers.bodyRenderer = ob.transform.Find("BodyLayer").GetComponentInChildren<Image>();
-            renderers.expressionRenderer = ob.transform.Find("ExpressionLayer").GetComponentInChildren<Image>();
+            //renderers.expressionRenderer = ob.transform.Find("ExpressionLayer").GetComponentInChildren<Image>();
             renderers.allBodyRenderers.Add(renderers.bodyRenderer);
-            renderers.allExpressionRenderers.Add(renderers.expressionRenderer);
-        }
+            Debug.Log("if문 작동!!!!!!!!!!!!!!!!!!!!!!여기는 캐릭터 생성자함수!!!!!!!!!!!!!!!!!!!!!!!!랜더러 리스트에 랜더러를 Add시키기.");
+            //renderers.allExpressionRenderers.Add(renderers.expressionRenderer);
+        }*/
 
         dialogue = DialogueSystem.instance;
 
@@ -282,7 +249,8 @@ public class Character
     {
         /// <summary>
         /// used as the only umage for a single layer character    /// </summary>
-        public RawImage renderer;
+        //public RawImage renderer;
+        //public Image renderer;
 
         //sprites use images.
         /// <summary>
@@ -292,11 +260,11 @@ public class Character
         /// <summary>
         /// The expression renderer for a multi layer character.
         /// </summary>
-        public Image expressionRenderer;
+        //public Image expressionRenderer;
 
 
         public List<Image> allBodyRenderers = new List<Image>();
-        public List<Image> allExpressionRenderers = new List<Image>();
+        //public List<Image> allExpressionRenderers = new List<Image>();
 
     }
 

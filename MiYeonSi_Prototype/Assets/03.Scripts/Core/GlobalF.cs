@@ -19,9 +19,9 @@ public class GlobalF : MonoBehaviour
             if (image == activImage)
             {
                 if (image.color.a < 1f)
-                { 
-                image.color = SetAlpha(image.color, smooth ? Mathf.Lerp(image.color.a, 1f, speed) : Mathf.MoveTowards(image.color.a, 1f, speed));
-                anyValueChanged = true;
+                {
+                    image.color = SetAlpha(image.color, smooth ? Mathf.Lerp(image.color.a, 1f, speed) : Mathf.MoveTowards(image.color.a, 1f, speed));
+                    anyValueChanged = true;
                 }
             }
             else
@@ -32,7 +32,7 @@ public class GlobalF : MonoBehaviour
                     anyValueChanged = true;
                 }
 
-               else
+                else
                 {
                     allImages.RemoveAt(i);
                     DestroyImmediate(image.gameObject);
