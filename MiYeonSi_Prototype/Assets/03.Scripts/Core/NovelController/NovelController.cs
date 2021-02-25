@@ -105,12 +105,12 @@ public class NovelController : MonoBehaviour
             if (line == "{")
                 continue;
 
-            line = line.Replace("    ", "");
+            line = line.Replace("        ","");
 
             if(line != "}")
             {
                 choices.Add(line.Split('"')[1]);
-                actions.Add(data[chapterProgress + 1].Replace("    ", ""));
+                actions.Add(data[chapterProgress + 1].Replace("        ", ""));
                 chapterProgress++;
             }
             else

@@ -90,15 +90,16 @@ public class Character
     public IEnumerator TransitioningBody(Sprite sprite, float speed, bool smooth)
     {
         
-        for (int i = 0; i < renderers.allBodyRenderers.Count; i++)
+        /*for (int i = 0; i < renderers.allBodyRenderers.Count; i++)
         {
             Image image = renderers.allBodyRenderers[i];
-            if (image.sprite == sprite)
+            if (image.sprite.name == sprite.name)
             {
                 renderers.bodyRenderer = image;
                 break;
             }
-        }
+        }*/
+
 
         if (renderers.bodyRenderer.sprite != sprite)
         {
@@ -215,6 +216,7 @@ public class Character
     {
         CharacterManager cm = CharacterManager.instance;
         //locate the character prefab.
+        Debug.Log(_name);
         GameObject prefab = Resources.Load("Characters/" + _name) as GameObject;
         if (prefab == null)
         {
@@ -228,16 +230,7 @@ public class Character
 
         //get the renderer(s)
         renderers.bodyRenderer = ob.GetComponentInChildren<Image>();
-        Debug.Log(renderers.bodyRenderer);
         renderers.allBodyRenderers.Add(renderers.bodyRenderer);
-        /*if (isCharacterRendererExist) //renderer에 값이 있으면 true
-        {
-            renderers.bodyRenderer = ob.transform.Find("BodyLayer").GetComponentInChildren<Image>();
-            //renderers.expressionRenderer = ob.transform.Find("ExpressionLayer").GetComponentInChildren<Image>();
-            renderers.allBodyRenderers.Add(renderers.bodyRenderer);
-            Debug.Log("if문 작동!!!!!!!!!!!!!!!!!!!!!!여기는 캐릭터 생성자함수!!!!!!!!!!!!!!!!!!!!!!!!랜더러 리스트에 랜더러를 Add시키기.");
-            //renderers.allExpressionRenderers.Add(renderers.expressionRenderer);
-        }*/
 
         dialogue = DialogueSystem.instance;
 
