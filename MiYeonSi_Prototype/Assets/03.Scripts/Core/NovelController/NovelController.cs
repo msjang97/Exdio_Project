@@ -121,7 +121,6 @@ public class NovelController : MonoBehaviour
         while (gatheringChoices)
         {
             chapterProgress++;
-            Debug.Log("라인 번호 : " + chapterProgress);
             line = data[chapterProgress];
 
             if (line == "{")
@@ -141,7 +140,7 @@ public class NovelController : MonoBehaviour
             }
         }
 
-        ChoiceManager.P_instance.savedChapterProgress = chapterProgress; //싱글턴에 진행상황 저장하고 다른씬으로 넘어가기
+        ChoiceManager.P_instance.savedChapterProgress = chapterProgress+3; //싱글턴에 진행상황 저장하고 다른씬으로 넘어가기
 
         //display choices
         if (choices.Count > 0 && miniGameName == null)

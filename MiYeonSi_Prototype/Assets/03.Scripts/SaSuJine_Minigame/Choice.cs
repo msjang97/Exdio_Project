@@ -11,14 +11,12 @@ public class Choice : MonoBehaviour
     private bool isSelected;
     private float destroyedTime = 2.0f;
 
-    // Start is called before the first frame update
     void Start()
     {
         animator = gameObject.GetComponent<Animator>();
         myPosition = this.transform.position;
     }
 
-    // Update is called once per frame 
     void Update()
     {
         if (bar.P_isStoped == true)
