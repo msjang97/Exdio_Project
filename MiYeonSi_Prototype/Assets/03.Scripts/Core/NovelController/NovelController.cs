@@ -1,10 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class NovelController : MonoBehaviour
 {
     public static NovelController instance;
+    //private string txtFileName = null;
 
     /// <summary> The lines of data loaded directly from a chapter file. /// </summary>
     List<string> data = new List<string>();
@@ -18,14 +20,23 @@ public class NovelController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        LoadChapterFile("Chapter0_start");
+        if (ChoiceManager.P_instance.P_selectedNum == null) //처음 시작할때만 
+            LoadChapterFile("Chapter0_start");
+        else
+        {
+            LoadChapterFile("SaSuJin_" + ChoiceManager.P_instance.P_chapterNum + ChoiceManager.P_instance.P_selectedNum);
+            ChoiceManager.P_instance.P_selectedNum = null;
+            ChoiceManager.P_instance.P_isMainSceneLoaded = false;
+            ChoiceManager.P_instance.P_chapterNum++;
+        }
+
     }
 
     // Update is called once per frame
     void Update()
     {
         //testing
-        if(Input.GetKeyDown(KeyCode.RightArrow))
+        if (Input.GetKeyDown(KeyCode.RightArrow))
         {
             Next();
         }
@@ -41,7 +52,7 @@ public class NovelController : MonoBehaviour
     {
         data = FileManager.LoadFile(FileManager.savPath + "Resources/Story/" + fileName);
         cachedLastSpeaker = "";
-        
+
         if (handlingChapterFile != null)
             StopCoroutine(handlingChapterFile);
         handlingChapterFile = StartCoroutine(HandlingChapterFile());
@@ -56,22 +67,32 @@ public class NovelController : MonoBehaviour
     IEnumerator HandlingChapterFile()
     {
         //the progress through the lines in this chapter.
-        chapterProgress = 0;
+        chapterProgress = 0; //번호가 여기서 초기화됌.
 
-        while(chapterProgress < data.Count)
+        while (chapterProgress < data.Count)
         {
             //we need a way of knowing when the player wants to advance. We nees d "next" trigger.Not just a keypress. But something that can be triggerd.
             //by a click or a keypress
-            if(_next)
+            if (_next)
             {
                 string line = data[chapterProgress];
 
                 //this is a choice
-                if(line.StartsWith("choice"))
+                if (line.StartsWith("choice"))
                 {
-                    yield return HandlingChoiceLine(line);
+                    yield return HandlingChoiceLine(line, null);
                     chapterProgress++;
                 }
+
+                //this is a Choice MiniGame
+                if(line.StartsWith("miniGame"))
+                {
+                    string[] miniGameName = null;
+                    miniGameName = line.Split('(', ')');
+                    yield return HandlingChoiceLine(line, miniGameName[1]); //여기서 미니게임 이름 넘겨주기. 
+                    chapterProgress++;
+                }
+
                 //this is a normal line of dialogue and actions.
                 else
                 {
@@ -82,7 +103,7 @@ public class NovelController : MonoBehaviour
                         yield return new WaitForEndOfFrame();
                     }
                 }
-                
+
             }
             yield return new WaitForEndOfFrame();
         }
@@ -90,24 +111,25 @@ public class NovelController : MonoBehaviour
     }
 
 
-    IEnumerator HandlingChoiceLine(string line)
+    IEnumerator HandlingChoiceLine(string line, string miniGameName)
     {
-        string title = line.Split('"')[1];
+        //string title = line.Split('"')[1];
         List<string> choices = new List<string>();
         List<string> actions = new List<string>();
 
         bool gatheringChoices = true;
-        while(gatheringChoices)
+        while (gatheringChoices)
         {
             chapterProgress++;
+            Debug.Log("라인 번호 : " + chapterProgress);
             line = data[chapterProgress];
 
             if (line == "{")
                 continue;
 
-            line = line.Replace("        ","");
+            line = line.Replace("        ", "");
 
-            if(line != "}")
+            if (line != "}")
             {
                 choices.Add(line.Split('"')[1]);
                 actions.Add(data[chapterProgress + 1].Replace("        ", ""));
@@ -119,15 +141,17 @@ public class NovelController : MonoBehaviour
             }
         }
 
+        ChoiceManager.P_instance.savedChapterProgress = chapterProgress; //싱글턴에 진행상황 저장하고 다른씬으로 넘어가기
+
         //display choices
-        if(choices.Count > 0)
+        if (choices.Count > 0 && miniGameName == null)
         {
-            ChoiceScreen.Show(choices.ToArray()); yield return new WaitForEndOfFrame();
+            ChoiceScreen.Show(choices.ToArray()); yield return new WaitForEndOfFrame(); //선택지 만드는중.
             while (ChoiceScreen.isWaitingForChoiceToBeMade)
                 yield return new WaitForEndOfFrame();
 
             //choice is made. execute the paired action.
-            string action = actions[ChoiceScreen.lastChoiceMade.index];
+            string action = actions[ChoiceScreen.lastChoiceMade.index]; //선택된 선택지에 대한 대답 출력.
             HandleLine(action);
 
             while (isHandlingLine)
@@ -135,16 +159,19 @@ public class NovelController : MonoBehaviour
         }
         else
         {
-            Debug.LogError("Invalid choice operation. No choices were found.");
+            ChoiceManager.P_instance.choices = choices; //선택지 텍스트 저장.
+            ChoiceManager.P_instance.actions = actions; //선택지 대답 저장.
+
+            SceneManager.LoadScene(miniGameName); //일반 선택지가 아니라면 각 미니게임 호출해주기.
         }
 
-        chapterProgress++;
+        //chapterProgress++;
     }
 
     void HandleLine(string rawLine)
     {
+        Debug.Log(rawLine);
         CLM.LINE line = CLM.Interpret(rawLine);
-
         //now we need to handle the line. This requires a loop full of waiting for input since the line consists of multiple segments that hve to be handled individually.
         StopHandlingLine();
         handlingLine = StartCoroutine(HandlingLine(line));
@@ -169,17 +196,17 @@ public class NovelController : MonoBehaviour
         _next = false;
         int lineProgress = 0; //progress through the segments of a line.
 
-        while(lineProgress < line.segments.Count)
+        while (lineProgress < line.segments.Count)
         {
             _next = false; //reset at the start of each loop.
             CLM.LINE.SEGMENT segment = line.segments[lineProgress];
 
             //always run the first segment automatically. But wait for the trigger on all proceding segments.
-            if(lineProgress > 0)
+            if (lineProgress > 0)
             {
-                if(segment.trigger == CLM.LINE.SEGMENT.TRIGGER.autoDelay)
+                if (segment.trigger == CLM.LINE.SEGMENT.TRIGGER.autoDelay)
                 {
-                    for(float timer = segment.autoDelay; timer >= 0; timer -= Time.deltaTime)
+                    for (float timer = segment.autoDelay; timer >= 0; timer -= Time.deltaTime)
                     {
                         yield return new WaitForEndOfFrame();
                         if (_next)
@@ -197,11 +224,11 @@ public class NovelController : MonoBehaviour
             //the segment now needs to build and run.
             segment.Run();
 
-            while(segment.isRunning)
+            while (segment.isRunning)
             {
                 yield return new WaitForEndOfFrame();
                 //allow for auto completion of the current segment for skipping purposes.
-                if(_next)
+                if (_next)
                 {
                     //rapidly complete the text on first advance, force it to finish on the second.
                     if (!segment.architect.skip)
@@ -217,23 +244,23 @@ public class NovelController : MonoBehaviour
         }
 
         //Line is finished. Handle all the actions set at the end of the line.
-        for(int i = 0; i<line.actions.Count; i++)
+        for (int i = 0; i < line.actions.Count; i++)
         {
             HandleAction(line.actions[i]);
         }
 
-        handlingLine = null;       
+        handlingLine = null;
     }
 
-  
+
     //ACTIONS
     // /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public void HandleAction(string action)
     {
-        print("Handle action [" + action + "]");
+        //print("Handle action [" + action + "]");
         string[] data = action.Split('(', ')');
 
-        switch(data[0])
+        switch (data[0])
         {
             case "enter":
                 Command_Enter(data[1]);
@@ -268,6 +295,9 @@ public class NovelController : MonoBehaviour
             case "Load":
                 Command_Load(data[1]);
                 break;
+            /*case "miniGameLoad":
+                Command_miniGameLoad(data[1]);
+                break;*/
         }
     }
 
@@ -276,6 +306,11 @@ public class NovelController : MonoBehaviour
         NovelController.instance.LoadChapterFile(chapterName);
     }
 
+    /*void Command_miniGameLoad(string gameName)
+    {
+        SceneManager.LoadScene(gameName);
+    }*/
+
     void Command_SetLayerImage(string data, BCFC.LAYER layer)
     {
         string texName = data.Contains(",") ? data.Split(',')[0] : data;
@@ -283,20 +318,20 @@ public class NovelController : MonoBehaviour
         float spd = 2f;
         bool smooth = false;
 
-        if(data.Contains(","))
+        if (data.Contains(","))
         {
             string[] parameters = data.Split(',');
-            foreach(string p in parameters)
+            foreach (string p in parameters)
             {
                 float fVal = 0;
                 bool bVal = false;
                 if (float.TryParse(p, out fVal))
                 {
-                    spd = fVal;  continue;
+                    spd = fVal; continue;
                 }
                 if (bool.TryParse(p, out bVal))
                 {
-                    smooth = bVal;  continue;
+                    smooth = bVal; continue;
                 }
             }
         }
@@ -355,7 +390,7 @@ public class NovelController : MonoBehaviour
         Character c = CharacterManager.instance.GetCharacter(character);
         Debug.Log(expression);
         Sprite sprite = c.GetSprite(expression);
-        c.TransitionBody(sprite, speed, false); 
+        c.TransitionBody(sprite, speed, false);
     }
 
     void Command_Enter(string data)
@@ -379,7 +414,7 @@ public class NovelController : MonoBehaviour
         float speed = 100;
         bool smooth = false;
 
-        foreach(string s in characters)
+        foreach (string s in characters)
         {
             Character c = CharacterManager.instance.GetCharacter(s);
             c.FadeOut(speed, smooth);

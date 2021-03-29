@@ -13,7 +13,7 @@ public class ChoiceScreen : MonoBehaviour
 
     static List<ChoiceButton> choices = new List<ChoiceButton>();
 
-    public VerticalLayoutGroup layoutGroup;
+    //public VerticalLayoutGroup layoutGroup;
 
     // Start is called before the first frame update
     void Awake()
@@ -80,7 +80,7 @@ public class ChoiceScreen : MonoBehaviour
         ob.SetActive(true);
         ChoiceButton b = ob.GetComponent<ChoiceButton>();
 
-        b.text = choice;
+        b.text = choice; //텍스트 삽입구간
         b.choiceIndex = choices.Count;
 
         choices.Add(b);

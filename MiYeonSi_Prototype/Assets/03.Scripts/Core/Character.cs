@@ -89,21 +89,21 @@ public class Character
 
     public IEnumerator TransitioningBody(Sprite sprite, float speed, bool smooth)
     {
-        
-        /*for (int i = 0; i < renderers.allBodyRenderers.Count; i++)
+        Image image = renderers.allBodyRenderers[0];
+        for (int i = 0; i < renderers.allBodyRenderers.Count; i++)
         {
-            Image image = renderers.allBodyRenderers[i];
+            image = renderers.allBodyRenderers[i];
             if (image.sprite.name == sprite.name)
             {
                 renderers.bodyRenderer = image;
                 break;
             }
-        }*/
+        }
 
-
-        if (renderers.bodyRenderer.sprite != sprite)
+        if (renderers.bodyRenderer.sprite.name != sprite.name && image != null)//이게 항상 실행되는게 문제야 둘이 당연히 다르지.. 바꾸려는 스프라이트랑 원래있던 스프라이트랑 똑같으면 바꾸는 의미가 없잖아..
         {
-            Image image = GameObject.Instantiate(renderers.bodyRenderer.gameObject, renderers.bodyRenderer.transform.parent).GetComponent<Image>();
+            image = GameObject.Instantiate(renderers.bodyRenderer.gameObject, renderers.bodyRenderer.transform.parent).GetComponent<Image>(); //이렇게 하면 계속 clone이 생김,, 수정바람.
+            
             renderers.allBodyRenderers.Add(image);
             renderers.bodyRenderer = image;
             image.color = GlobalF.SetAlpha(image.color, 0f);
@@ -216,7 +216,6 @@ public class Character
     {
         CharacterManager cm = CharacterManager.instance;
         //locate the character prefab.
-        Debug.Log(_name);
         GameObject prefab = Resources.Load("Characters/" + _name) as GameObject;
         if (prefab == null)
         {

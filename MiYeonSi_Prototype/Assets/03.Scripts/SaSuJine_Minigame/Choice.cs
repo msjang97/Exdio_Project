@@ -8,7 +8,7 @@ public class Choice : MonoBehaviour
     private Vector3 myPosition;
     public Bar bar;
 
-    private bool isSelected;  
+    private bool isSelected;
     private float destroyedTime = 2.0f;
 
     // Start is called before the first frame update
@@ -18,7 +18,7 @@ public class Choice : MonoBehaviour
         myPosition = this.transform.position;
     }
 
-    // Update is called once per frame //animator.SetBool("havetoDestroy", true);
+    // Update is called once per frame 
     void Update()
     {
         if (bar.P_isStoped == true)
@@ -35,7 +35,8 @@ public class Choice : MonoBehaviour
             bar.gameObject.transform.position = Vector3.Lerp(transform.position, myPosition, 0.01f);
             isSelected = true;
             animator.SetBool("IsSelected", true);
-        }          
+            ChoiceManager.P_instance.P_selectedNum = name;
+        }
     }
 
     private void AnimationController()
