@@ -82,6 +82,7 @@ public class NovelController : MonoBehaviour
                         yield return new WaitForEndOfFrame();
                     chapterProgress = ChoiceManager.P_instance.savedChapterProgress;
                     isAfterMiniGame = false;
+                    continue;
                 }
                     
                 string line = data[chapterProgress];
@@ -200,7 +201,7 @@ public class NovelController : MonoBehaviour
     IEnumerator HandlingLine(CLM.LINE line)
     {
         _next = false;
-        Debug.Log("여기서 next = false로 변함.");
+
         int lineProgress = 0; //progress through the segments of a line.
 
         while (lineProgress < line.segments.Count)
