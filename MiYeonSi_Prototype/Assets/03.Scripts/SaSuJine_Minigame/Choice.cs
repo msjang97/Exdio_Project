@@ -33,7 +33,8 @@ public class Choice : MonoBehaviour
             bar.gameObject.transform.position = Vector3.Lerp(transform.position, myPosition, 0.01f);
             isSelected = true;
             animator.SetBool("IsSelected", true);
-            ChoiceManager.P_instance.P_selectedNum = name;
+            name = name.Replace("Choice", "");
+            ChoiceManager.P_instance.selectedNum = int.Parse(name);
         }
     }
 

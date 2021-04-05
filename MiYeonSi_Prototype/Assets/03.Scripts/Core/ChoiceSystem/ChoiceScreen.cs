@@ -7,15 +7,11 @@ using TMPro;
 public class ChoiceScreen : MonoBehaviour
 {
     public static ChoiceScreen instance;
-
     public GameObject root;
     public ChoiceButton choicePrefab;
 
     static List<ChoiceButton> choices = new List<ChoiceButton>();
 
-    //public VerticalLayoutGroup layoutGroup;
-
-    // Start is called before the first frame update
     void Awake()
     {
         instance = this;
