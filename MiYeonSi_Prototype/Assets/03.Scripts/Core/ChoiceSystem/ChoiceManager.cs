@@ -5,21 +5,14 @@ using UnityEngine.SceneManagement;
 
 public class ChoiceManager : MonoBehaviour
 {
-    private string selectedNum = null;
-    public string P_selectedNum { get { return selectedNum; } set { selectedNum = value; } }
-
-    private int chapterNum = 1;
-    public int P_chapterNum { get { return chapterNum; } set { chapterNum = value; } }
-
-    private bool isMainSceneLoaded = false;
-    public bool P_isMainSceneLoaded { get { return isMainSceneLoaded; } set { isMainSceneLoaded = value; } }
-
+    [HideInInspector] public int selectedNum = 0;
+    [HideInInspector] public int chapterNum = 0;
+    [HideInInspector] public bool isMainSceneLoaded = false;
     [HideInInspector] public int savedChapterProgress;
 
     public List<string> choices = new List<string>();
     public List<string> actions = new List<string>();
 
-    //private GameObject ChoiceManagerObject; 
     private static ChoiceManager instance = null;
     public static ChoiceManager P_instance 
     {
@@ -47,10 +40,9 @@ public class ChoiceManager : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if (selectedNum != null && isMainSceneLoaded == false)
+        if (selectedNum != 0 && isMainSceneLoaded == false) //선택된 num이 있고, 아직 MainScene이 로드되지 않았을때 if문 실행.
         {
             StartCoroutine("LoadMainScene");
             isMainSceneLoaded = true;  
